@@ -23,7 +23,12 @@ type
     Label6: TLabel;
     procedure btnCadastrarClick(Sender: TObject);
   private
+    procedure LimparResultado;
+    procedure ApresentarResultado;
+    procedure ValidarCampos;
     procedure CadastrarCliente;
+    procedure LimparCampos;
+
     { Private declarations }
   public
     { Public declarations }
@@ -36,6 +41,15 @@ implementation
 
 {$R *.dfm}
 
+procedure TForm1.ApresentarResultado;
+begin
+  memResultado.Lines.Add('Nome: ' + edtNome.Text);
+  memResultado.Lines.Add('Telefone: ' + edtTelefone.Text);
+  memResultado.Lines.Add('Email: ' + edtEmail.Text);
+  memResultado.Lines.Add('Cidade: ' + edtCidade.Text);
+  memResultado.Lines.Add('UF: ' + edtUf.Text);
+end;
+
 procedure TForm1.btnCadastrarClick(Sender: TObject);
 begin
   CadastrarCliente;
@@ -43,8 +57,30 @@ end;
 
 procedure TForm1.CadastrarCliente;
 begin
-  memResultado.Lines.Clear;
+  LimparResultado;
+  ValidarCampos;
+  ApresentarResultado;
+  LimparCampos;
+end;
 
+procedure TForm1.LimparCampos;
+begin
+  edtNome.Text := EmptyStr;
+  edtTelefone.Text := EmptyStr;
+  edtEmail.Text := EmptyStr;
+  edtCidade.Text := EmptyStr;
+  edtUf.Text := EmptyStr;
+
+  edtNome.SetFocus;
+end;
+
+procedure TForm1.LimparResultado;
+begin
+  memResultado.Lines.Clear;
+end;
+
+procedure TForm1.ValidarCampos;
+begin
   if edtNome.Text = EmptyStr then
   begin
     ShowMessage('Informe o nome');
@@ -79,19 +115,5 @@ begin
     edtUf.SetFocus;
     Abort;
   end;
-
-  memResultado.Lines.Add('Nome: ' + edtNome.Text);
-  memResultado.Lines.Add('Telefone: ' + edtTelefone.Text);
-  memResultado.Lines.Add('Email: ' + edtEmail.Text);
-  memResultado.Lines.Add('Cidade: ' + edtCidade.Text);
-  memResultado.Lines.Add('UF: ' + edtUf.Text);
-
-  edtNome.Text := EmptyStr;
-  edtTelefone.Text := EmptyStr;
-  edtEmail.Text := EmptyStr;
-  edtCidade.Text := EmptyStr;
-  edtUf.Text := EmptyStr;
-
-  edtNome.SetFocus;
 end;
 end.
